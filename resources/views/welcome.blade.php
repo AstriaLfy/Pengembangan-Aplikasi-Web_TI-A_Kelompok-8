@@ -12,7 +12,7 @@
             <div class="flex justify-between">
                 <div class="flex space-x-7">
                     <a href="#" class="flex items-center py-4 px-2">
-                        <span class="font-semibold text-gray-500 text-lg">⚽ FutsalKu</span>
+                        <span class="font-semibold text-gray-500 text-lg">🏸 Badmintime</span>
                     </a>
                 </div>
                 <div class="hidden md:flex items-center space-x-3 ">
