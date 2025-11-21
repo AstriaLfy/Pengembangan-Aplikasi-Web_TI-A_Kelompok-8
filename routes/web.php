@@ -24,3 +24,7 @@ Route::resource('fields', FieldController::class);
 require __DIR__.'/auth.php';
 
 Route::resource('bookings', BookingController::class);
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
