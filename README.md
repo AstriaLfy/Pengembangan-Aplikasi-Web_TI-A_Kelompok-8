@@ -1,109 +1,189 @@
-# Badmintime – Platform Pemesanan Lapangan Badminton Berbasis Web
+# H-Dear – Aplikasi Generator Undangan & Surat Resmi Otomatis
 
-2. Deskripsi Singkat
-Jelaskan fungsi proyek secara ringkas.
+H-Dear adalah aplikasi berbasis web yang dirancang untuk mempermudah panitia acara (Event Organizer/BEM/Hima) dalam membuat surat permohonan dan undangan resmi secara otomatis. Aplikasi ini menyediakan berbagai template standar (seperti MC, Pemateri, Juri, VIP) dengan formulir input dinamis dan menghasilkan output langsung berupa file PDF siap cetak.
 
-3. Daftar Fitur
-Tulis fitur apa saja yang kamu buat.
-## ✨ Fitur
-- Register & Login (Authentication)
-- Role-based Access: User & Admin
-- CRUD Laporan Sampah (Admin)
-- User membuat laporan
-- Status laporan (Pending → Diproses → Selesai)
-- Upload gambar laporan
-- Session & Middleware untuk proteksi halaman
+Project ini dibangun menggunakan arsitektur MVC dan menerapkan database relasional.
 
-4. Arsitektur / Tech Stack
-Tuliskan teknologi yang digunakan.
-## 🔧 Tech Stack
-- PHP / Laravel 11
-- MySQL
-- Bootstrap / Tailwind (opsional)
-- Blade Template (jika Laravel)
-- MVC Architecture
+## ✨ Daftar Fitur
+Berikut adalah implementasi fitur:
+- Authentication System: Login & Register untuk pengguna.
+- Role-Based Access Control (RBAC): Pemisahan akses antara User (Pembuat Surat) dan Admin (Pengelola Template).
+- CRUD Template (Admin): Admin dapat Membuat, Membaca, Mengedit, dan Menghapus template surat beserta thumbnail-nya.
+- Smart Form Logic: Formulir input bersifat dinamis; kolom input akan berubah menyesuaikan jenis template yang dipilih (misal: kolom "Topik Materi" hanya muncul untuk template Pemateri).
+- PDF Generator: Generate surat otomatis menjadi file `.pdf` menggunakan library DomPDF.
+- Session & Middleware: Proteksi route admin dan user menggunakan middleware `auth` dan pengecekan role `is_admin`.
 
-5. Skema Database (Wajib sesuai PDF)
-Buat tabel relasi. Bisa berupa teks atau gambar.
-## 🗂️ Skema Database
+## 🔧 Arsitektur / Tech Stack
+Teknologi yang digunakan dalam pengembangan project:
 
-### Tabel users
-- id
-- name
-- email
-- password
-- role
+- Backend: PHP / Laravel 10 (MVC Architecture)
+- Database: MySQL (Relational Database)
+- Frontend: Blade Templates, Tailwind CSS (CDN)
+- PDF Engine: barryvdh/laravel-dompdf
+- Version Control: Git & GitHub
 
-### Tabel reports
-- id
-- user_id (FK)
-- category_id (FK)
-- title
-- description
-- image
-- status
+## 🗂 Skema Database
+Aplikasi ini menggunakan minimal 3 tabel yang saling berelasi.
 
-### Tabel categories
-- id
-- name
+### Tabel `users`
+Menyimpan data pengguna dan status role (admin/user).
+- `id` (Primary Key)
+- `name`
+- `email`
+- `password`
+- `is_admin` (Boolean: 1=Admin, 0=User)
+- `timestamps`
 
-6. Cara Install / Cara Menjalankan
-## 🚀 Cara Menjalankan
+### Tabel `templates`
+Menyimpan desain master surat HTML dan konfigurasi tampilan.
+- `id` (Primary Key)
+- `nama_template` (String)
+- `deskripsi` (Text)
+- `html_content` (LongText - kode HTML surat)
+- `thumbnail` (String - path gambar)
+- `is_active` (Boolean)
+- `timestamps`
 
-a. Clone repository
-git clone https://github.com/username/nama-projek.git
+### Tabel `undangans`
+Menyimpan data surat yang telah dibuat oleh user.
+- `id` (Primary Key)
+- `user_id` (Foreign Key -> users.id)
+- `template_id` (Foreign Key -> templates.id)
+- `nama_pengirim`
+- `nama_acara`
+- `tanggal_acara`
+- `tempat_acara`
+- `tujuan_undangan` (Nama Penerima)
+- `nomor_surat` (Nullable)
+- `jabatan_penerima` (Nullable - e.g., MC, Juri)
+- `topik_acara` (Nullable - Khusus Pemateri/Juri)
+- `link_dokumen` (Nullable - Khusus TOR/Rundown)
+- `pesan_tambahan`
+- `timestamps`
 
-b. Masuk Folder
-cd nama-projek
+**Relasi:**
+- User *has many* Undangans.
+- Template *has many* Undangans.
 
-c. Install Dependencies
+## 🚀 Cara Menjalankan (Installation)
+
+Ikuti langkah berikut untuk menjalankan project:
+
+**a. Clone repository**
+```bash
+git clone [https://github.com/username-anda/h-dear.git](https://github.com/username-anda/h-dear.git)
+````
+
+**b. Masuk Folder Project**
+
+```bash
+cd h-dear
+```
+
+**c. Install Dependencies**
+
+```bash
 composer install
+npm install
+```
 
-d. Copy env
+**d. Setup Environment**
+
+  - Copy file `.env.example` menjadi `.env`.
+  - Atur konfigurasi database di file `.env`:
+
+<!-- end list -->
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=h_dear
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+**e. Generate App Key**
+
+```bash
 php artisan key:generate
+```
 
-e. Generate Key
-php artisan key:generate
+**f. Setup Storage Link**
+Wajib dilakukan agar thumbnail template muncul.
 
-f. Setup database di .env
+```bash
+php artisan storage:link
+```
 
-g. Jalankan migrasi
-php artisan migrate
+**g. Migrasi & Seeding Data (PENTING)**
+Perintah ini akan membuat tabel dan mengisi data Admin default serta 6 Template bawaan.
 
-h. Jalankan web
+```bash
+php artisan migrate:fresh --seed
+```
+
+**h. Jalankan Server**
+
+```bash
 php artisan serve
+```
 
-7. List Endpoint / Route (Wajib sesuai PDF)
+Akses web di: `http://127.0.0.1:8000`
+
 ## 📌 List Endpoint / Route
 
-### Auth
-- GET /login
-- POST /login
-- GET /register
-- POST /register
-- GET /logout
+[cite_start]Berikut adalah daftar path utama yang tersedia dalam project ini[cite: 37]:
 
-### User
-- GET /reports
-- GET /reports/create
-- POST /reports
-- GET /reports/{id}
+### Authentication
 
-### Admin
-- GET /admin/reports
-- POST /admin/reports/{id}/update
-- DELETE /admin/reports/{id}
+  - `GET  /login` : Halaman Login
+  - `POST /login` : Proses Login
+  - `GET  /register` : Halaman Daftar
+  - `POST /register` : Proses Daftar
+  - `POST /logout` : Logout User
 
-8. Screenshots UI
-## 🖼️ Screenshots
-![Login Page](screenshots/login.png)
-![Dashboard Admin](screenshots/dashboard.png)
+### User (Pembuat Surat)
 
-9. Anggota Kelompok
+  - `GET  /dashboard` : Redirect ke halaman utama user
+  - `GET  /undangan` : Halaman pilih template (Read)
+  - `GET  /undangan/{id}/create` : Form pembuatan surat (Create)
+  - `POST /undangan` : Simpan data surat (Store)
+  - `GET  /undangan/{id}/preview` : Halaman preview surat sebelum download
+  - `GET  /undangan/{id}/download` : Download PDF surat
+
+### Admin (Pengelola)
+
+Dilindungi middleware `is_admin`.
+
+  - `GET  /admin/templates` : Dashboard daftar template (Read)
+  - `GET  /admin/templates/create` : Form tambah template (Create)
+  - `POST /admin/templates` : Simpan template baru
+  - `GET  /admin/templates/{id}/edit` : Form edit template (Update)
+  - `PUT  /admin/templates/{id}` : Update data template
+  - `DELETE /admin/templates/{id}` : Hapus template (Delete)
+
+## 🖼 Screenshots UI
+
+*(Silakan ganti path gambar di bawah ini dengan screenshot asli project kamu)*
+
+**1. Halaman Pilihan Template (User)**
+
+**2. Smart Form Input**
+
+**3. Preview & Download PDF**
+
 ## 👥 Anggota Kelompok
-- Ihsan – Backend
-- Teman 1 – Frontend
-- Teman 2 – Database
 
-10. Catatan Tambahan / License (Opsional)
-Misal ada fitur bonus, atau link demo.
+Project ini dikerjakan oleh:
+
+1.  **Nama Mahasiswa 1** (NIM) - *Role (misal: Fullstack Developer)*
+2.  **Nama Mahasiswa 2** (NIM) - *Role (misal: Database & Seeder)*
+3.  **Nama Mahasiswa 3** (NIM) - *Role (misal: UI/UX & Laporan)*
+
+## 📄 Akun Default
+
+Gunakan akun ini untuk pengujian:
+
+  - **Admin**: `admin@admin.com` / password: `password`
+  - **User**: Silakan register akun baru.
