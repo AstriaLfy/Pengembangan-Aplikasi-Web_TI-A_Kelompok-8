@@ -133,7 +133,7 @@ Akses web di: `http://127.0.0.1:8000`
 
 ## 📌 List Endpoint / Route
 
-[cite_start]Berikut adalah daftar path utama yang tersedia dalam project ini[cite: 37]:
+Daftar path utama yang tersedia dalam project:
 
 ### Authentication
 
