@@ -71,7 +71,7 @@ Ikuti langkah berikut untuk menjalankan project:
 
 **a. Clone repository**
 ```bash
-git clone [https://github.com/username-anda/h-dear.git](https://github.com/username-anda/h-dear.git)
+git clone https://github.com/Leroisane/H-Dear
 ````
 
 **b. Masuk Folder Project**
