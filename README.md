@@ -165,8 +165,6 @@ Dilindungi middleware `is_admin`.
 
 ## 🖼 Screenshots UI
 
-*(Silakan ganti path gambar di bawah ini dengan screenshot asli project kamu)*
-
 **1. Halaman Pilihan Template (User)**
 
 **2. Smart Form Input**
@@ -177,9 +175,9 @@ Dilindungi middleware `is_admin`.
 
 Project ini dikerjakan oleh:
 
-- Muhammad Ihsan Fadillah (245150700111023)    : User Interface & PDF Generator
-- Mohammad Rozan Hanan (245150700111042)       : Backend & Authentication Specialist
-- Audrey Khansa Larasati (245150701111031)     : Admin Panel & Template Management
+- Muhammad Ihsan Fadillah (245150700111023): User Interface & PDF Generator
+- Mohammad Rozan Hanan (245150700111042): Backend & Authentication Specialist
+- Audrey Khansa Larasati (245150701111031): Admin Panel & Template Management
 
 ## 📄 Akun Default
 
