@@ -96,11 +96,11 @@ npm install
 
 ```env
 DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
+DB_HOST=ballast.proxy.rlwy.net
+DB_PORT=32780
 DB_DATABASE=h_dear
 DB_USERNAME=root
-DB_PASSWORD=
+DB_PASSWORD=rjjwJInhqKnqNavRBHaQCUwJFEQCqOqb
 ```
 
 **e. Generate App Key**
@@ -177,9 +177,9 @@ Dilindungi middleware `is_admin`.
 
 Project ini dikerjakan oleh:
 
-1.  **Nama Mahasiswa 1** (NIM) - *Role (misal: Fullstack Developer)*
-2.  **Nama Mahasiswa 2** (NIM) - *Role (misal: Database & Seeder)*
-3.  **Nama Mahasiswa 3** (NIM) - *Role (misal: UI/UX & Laporan)*
+- Muhammad Ihsan Fadillah (245150700111023)    : User Interface & PDF Generator
+- Mohammad Rozan Hanan (245150700111042)       : Backend & Authentication Specialist
+- Audrey Khansa Larasati (245150701111031)     : Admin Panel & Template Management
 
 ## 📄 Akun Default
 
